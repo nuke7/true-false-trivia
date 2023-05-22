@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import LoadingPage from "./loading";
+import { start } from "repl";
 
 type ApiResponse = {
   response_code: number;
@@ -22,29 +24,31 @@ export default function TrueFalseApp() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<(boolean | null)[]>([]);
   const [score, setScore] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchQuestions = async (numQuestions: number) => {
-      try {
-        const uniqueQuestions: Question[] = [];
-        while (uniqueQuestions.length < numQuestions) {
-          const response = await axios.get<ApiResponse>(
-            `https://opentdb.com/api.php?amount=1&type=boolean`
-          );
-          const newQuestion = response.data.results[0];
-          const isDuplicate = uniqueQuestions.some(
-            (question) => question.question === newQuestion.question
-          );
-          if (!isDuplicate) {
-            uniqueQuestions.push(newQuestion);
-          }
+  const fetchQuestions = async (numQuestions: number) => {
+    try {
+      const uniqueQuestions: Question[] = [];
+      while (uniqueQuestions.length < numQuestions) {
+        setLoading(true);
+        const response = await axios.get<ApiResponse>(
+          `https://opentdb.com/api.php?amount=1&type=boolean`
+        );
+        const newQuestion = response.data.results[0];
+        const isDuplicate = uniqueQuestions.some(
+          (question) => question.question === newQuestion.question
+        );
+        if (!isDuplicate) {
+          uniqueQuestions.push(newQuestion);
         }
-        setQuestions(uniqueQuestions);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
       }
-    };
-
+      setQuestions(uniqueQuestions);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
+  useEffect(() => {
     fetchQuestions(10);
   }, []);
 
@@ -65,19 +69,50 @@ export default function TrueFalseApp() {
 
   const currentQuestion = getCurrentQuestion();
 
+  const startNewGame = () => {
+    setQuestions([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers([]);
+    setScore(0);
+    fetchQuestions(10);
+  };
+
   return (
     <div>
-      <h1>True or False App</h1>
-      {currentQuestion ? (
+      <h1 className="text-4xl font-bold text-center">True or False App</h1>
+      {currentQuestion && !loading && (
         <>
-          <h3>{currentQuestion.question}</h3>
-          <button onClick={() => handleAnswer(true)}>True</button>
-          <button onClick={() => handleAnswer(false)}>False</button>
+          <h3
+            className="text-2xl font-bold text-center mt-8"
+            dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
+          ></h3>
+          <button
+            className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+            onClick={() => handleAnswer(true)}
+          >
+            True
+          </button>
+          <button
+            className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+            onClick={() => handleAnswer(false)}
+          >
+            False
+          </button>
         </>
-      ) : (
-        <p>
-          No more questions! You scored {score} out of {questions.length}.
-        </p>
+      )}
+      {loading && <LoadingPage />}
+      {!loading && !currentQuestion && (
+        <div>
+          <p>
+            No more questions! You scored {score} out of {questions.length}.
+          </p>
+          <button
+            className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+            onClick={() => startNewGame()}
+          >
+            Play Again
+          </button>
+        </div>
       )}
     </div>
   );
