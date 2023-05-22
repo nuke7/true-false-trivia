@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingPage from "./loading";
-import { start } from "repl";
 
 type ApiResponse = {
   response_code: number;
