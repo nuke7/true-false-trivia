@@ -92,13 +92,13 @@ export default function TrueFalseApp() {
           ></h3>
           <div className="text-center mx-auto py-8 w-[85%]">
             <button
-              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              className="bg-green-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
               onClick={() => handleAnswer(true)}
             >
               True
             </button>
             <button
-              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              className="bg-red-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
               onClick={() => handleAnswer(false)}
             >
               False
