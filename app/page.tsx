@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingPage from "./loading";
+import { useSearchContext } from "@/context/SearchContext";
+import CategorySelect from "@/components/CategorySelect";
 
 type ApiResponse = {
   response_code: number;
@@ -25,13 +27,15 @@ export default function TrueFalseApp() {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  const { category } = useSearchContext();
+
   const fetchQuestions = async (numQuestions: number) => {
     try {
       const uniqueQuestions: Question[] = [];
       while (uniqueQuestions.length < numQuestions) {
         setLoading(true);
         const response = await axios.get<ApiResponse>(
-          `https://opentdb.com/api.php?amount=1&type=boolean`
+          `https://opentdb.com/api.php?amount=1&category=${category}&type=boolean`
         );
         const newQuestion = response.data.results[0];
         const isDuplicate = uniqueQuestions.some(
@@ -53,7 +57,7 @@ export default function TrueFalseApp() {
 
   const handleAnswer = (answer: boolean) => {
     const currentQuestion = questions[currentQuestionIndex];
-    const isCorrect = answer === (currentQuestion.correct_answer === "True");
+    const isCorrect: boolean = answer === (currentQuestion.correct_answer === "True");
     setUserAnswers([...userAnswers, answer]);
     setScore(score + (isCorrect ? 1 : 0));
     setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -78,31 +82,34 @@ export default function TrueFalseApp() {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold text-center">True or False App</h1>
+      <h1 className="text-4xl py-4 font-bold text-center">True or False App</h1>
+      <CategorySelect />
       {currentQuestion && !loading && (
         <>
           <h3
-            className="text-2xl font-bold text-center mt-8"
+            className="text-2xl font-bold text-center mt-8 w-[90%] h-32 mx-auto"
             dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
           ></h3>
-          <button
-            className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
-            onClick={() => handleAnswer(true)}
-          >
-            True
-          </button>
-          <button
-            className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
-            onClick={() => handleAnswer(false)}
-          >
-            False
-          </button>
+          <div className="text-center mx-auto py-8 w-[85%]">
+            <button
+              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              onClick={() => handleAnswer(true)}
+            >
+              True
+            </button>
+            <button
+              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              onClick={() => handleAnswer(false)}
+            >
+              False
+            </button>
+          </div>
         </>
       )}
       {loading && <LoadingPage />}
       {!loading && !currentQuestion && (
-        <div>
-          <p>
+        <div className="text-center mx-auto w-[85%]">
+          <p className="text-2xl font-bold text-center mt-8 w-[90%] h-32 mx-auto">
             No more questions! You scored {score} out of {questions.length}.
           </p>
           <button
