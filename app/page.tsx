@@ -87,7 +87,7 @@ export default function TrueFalseApp() {
       {currentQuestion && !loading && (
         <>
           <h3
-            className="text-2xl font-bold text-center mt-8 w-[90%] h-32 mx-auto"
+            className="text-2xl font-bold text-center mt-8 w-[90%] h-24 mx-auto"
             dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
           ></h3>
           <div className="text-center mx-auto py-8 w-[85%]">
@@ -109,9 +109,20 @@ export default function TrueFalseApp() {
       {loading && <LoadingPage />}
       {!loading && !currentQuestion && (
         <div className="text-center mx-auto w-[85%]">
-          <p className="text-2xl font-bold text-center mt-8 w-[90%] h-32 mx-auto">
+          <p className="text-2xl font-bold text-center mt-8 w-[90%] h-24 mx-auto">
             No more questions! You scored {score} out of {questions.length}.
           </p>
+          {questions.map((question, index) => {
+            return (
+              <div key={index}>
+                <p
+                  className="text-lg font-bold text-center mt-8 w-[90%] mx-auto"
+                  dangerouslySetInnerHTML={{ __html: question.question }}
+                ></p>
+                <p>{question.correct_answer === "True" ? "True!" : "False!"}</p>
+              </div>
+            );
+          })}
           <div className="text-center mx-auto py-8 w-[85%]">
             <button
               className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
