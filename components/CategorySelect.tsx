@@ -1,10 +1,7 @@
 "use client";
 import { useSearchContext } from "@/context/SearchContext";
-import { useState } from "react";
 
 const CategorySelect = () => {
-  const [triviaCategory, setTriviaCategory] = useState(9);
-
   const { category, defineCategory } = useSearchContext();
 
   return (
