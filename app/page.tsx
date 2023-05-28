@@ -25,7 +25,7 @@ export default function TrueFalseApp() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<(boolean | null)[]>([]);
   const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { category } = useSearchContext();
 
@@ -51,10 +51,11 @@ export default function TrueFalseApp() {
       console.error("Error fetching questions:", error);
     }
   };
-  useEffect(() => {
+
+  /* useEffect(() => {
     fetchQuestions(10);
   }, []);
-
+ */
   const handleAnswer = (answer: boolean) => {
     const currentQuestion = questions[currentQuestionIndex];
     const isCorrect: boolean = answer === (currentQuestion.correct_answer === "True");
@@ -109,9 +110,11 @@ export default function TrueFalseApp() {
       {loading && <LoadingPage />}
       {!loading && !currentQuestion && (
         <div className="text-center mx-auto w-[85%]">
-          <p className="text-2xl font-bold text-center mt-8 w-[90%] h-24 mx-auto">
-            No more questions! You scored {score} out of {questions.length}.
-          </p>
+          {questions.length > 0 && (
+            <p className="text-2xl font-bold text-center mt-8 w-[90%] h-24 mx-auto">
+              No more questions! You scored {score} out of {questions.length}.
+            </p>
+          )}
           {questions.map((question, index) => {
             return (
               <div key={index}>
@@ -128,7 +131,7 @@ export default function TrueFalseApp() {
               className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
               onClick={() => startNewGame()}
             >
-              Play Again
+              New Game
             </button>
           </div>
         </div>
