@@ -81,7 +81,9 @@ export default function TrueFalseApp() {
 
   return (
     <div>
-      <h1 className="text-4xl py-4 font-bold text-center">True or False App</h1>
+      <h1 className="text-4xl py-4 font-bold text-center bg-gradient-to-r from-green-300 via-blue-200 to-red-400 bg-clip-text text-transparent">
+        True or False App
+      </h1>
       <CategorySelect />
       {currentQuestion && !loading && (
         <>
