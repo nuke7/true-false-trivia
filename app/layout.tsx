@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="font-sans bg-slate-700 text-slate-100">
+      <body className="font-sans bg-slate-800 text-slate-100">
         <SearchContextProvider>{children}</SearchContextProvider>
       </body>
     </html>
