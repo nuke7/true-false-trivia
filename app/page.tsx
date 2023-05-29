@@ -87,23 +87,25 @@ export default function TrueFalseApp() {
       <CategorySelect />
       {currentQuestion && !loading && (
         <>
-          <h3
-            className="text-2xl font-bold text-center mt-8 w-[90%] min-h-24 h-auto mx-auto"
-            dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
-          ></h3>
-          <div className="text-center mx-auto py-8 w-[85%]">
-            <button
-              className="bg-green-700 p-2 m-2 hover:bg-green-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
-              onClick={() => handleAnswer(true)}
-            >
-              True
-            </button>
-            <button
-              className="bg-red-700 p-2 m-2 hover:bg-red-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
-              onClick={() => handleAnswer(false)}
-            >
-              False
-            </button>
+          <div className="flex flex-col justify-between items-center">
+            <h3
+              className="text-2xl font-bold text-center mt-8 w-[90%] sm:h-48 h-96 mx-auto"
+              dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
+            ></h3>
+            <div className="text-center mx-auto py-8 w-[85%]">
+              <button
+                className="bg-green-700 p-2 m-2 hover:bg-green-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+                onClick={() => handleAnswer(true)}
+              >
+                True
+              </button>
+              <button
+                className="bg-red-700 p-2 m-2 hover:bg-red-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+                onClick={() => handleAnswer(false)}
+              >
+                False
+              </button>
+            </div>
           </div>
         </>
       )}
