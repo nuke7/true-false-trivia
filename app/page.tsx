@@ -22,6 +22,19 @@ type Question = {
   incorrect_answers: string[];
 };
 
+enum categoryList {
+  "General Knowledge" = 9,
+  "Books" = 10,
+  "Film" = 11,
+  "Music" = 12,
+  "Television" = 14,
+  "Video Games" = 15,
+  "Board Games" = 16,
+  "Computers" = 18,
+  "Mythology" = 20,
+  "Sports" = 21,
+}
+
 export default function TrueFalseApp() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -84,10 +97,13 @@ export default function TrueFalseApp() {
       <h1 className="text-4xl py-4 font-bold text-center bg-gradient-to-r from-green-300 via-blue-200 to-red-400 bg-clip-text text-transparent">
         True or False App
       </h1>
-      <CategorySelect />
+      {!currentQuestion && !loading && <CategorySelect />}
       {currentQuestion && !loading && (
         <>
           <div className="flex flex-col justify-between items-center">
+            <h2 className="text-2xl font-bold text-center mt-8 w-[90%] mx-auto">
+              Selected category: {categoryList[category]}
+            </h2>
             <h3
               className="text-2xl font-bold text-center mt-8 w-[90%] sm:h-48 h-96 mx-auto"
               dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
@@ -111,12 +127,20 @@ export default function TrueFalseApp() {
       )}
       {loading && <LoadingPage />}
       {!loading && !currentQuestion && (
-        <div className="text-center mx-auto w-[85%]">
+        <div className="text-center mx-auto w-[85%] pb-8 mb-8">
           {questions.length > 0 && (
             <p className="text-2xl font-bold bg-gradient-to-r from-green-300 via-blue-400 to-red-400 bg-clip-text text-transparent text-center mt-8 w-[90%] min-h-24 mx-auto">
               No more questions! You scored {score} out of {questions.length}.
             </p>
           )}
+          <div className="text-center mx-auto py-8 w-[85%]">
+            <button
+              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              onClick={() => startNewGame()}
+            >
+              New Game
+            </button>
+          </div>
           {questions.map((question, index) => {
             return (
               <div key={index}>
@@ -157,14 +181,6 @@ export default function TrueFalseApp() {
               </div>
             );
           })}
-          <div className="text-center mx-auto py-8 w-[85%]">
-            <button
-              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
-              onClick={() => startNewGame()}
-            >
-              New Game
-            </button>
-          </div>
         </div>
       )}
     </div>
