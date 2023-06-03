@@ -94,29 +94,29 @@ export default function TrueFalseApp() {
 
   return (
     <div>
-      <h1 className="text-4xl py-4 font-bold text-center bg-gradient-to-r from-green-300 via-blue-200 to-red-400 bg-clip-text text-transparent">
+      <h1 className="bg-gradient-to-r from-green-300 via-blue-200 to-red-400 bg-clip-text py-4 text-center text-4xl font-bold text-transparent">
         True or False App
       </h1>
       {!currentQuestion && !loading && <CategorySelect />}
       {currentQuestion && !loading && (
         <>
-          <div className="flex flex-col justify-between items-center">
-            <h2 className="text-2xl font-bold text-center mt-8 w-[90%] mx-auto">
+          <div className="flex flex-col items-center justify-between">
+            <h2 className="mx-auto mt-8 w-[90%] text-center text-2xl font-bold">
               Selected category: {categoryList[category]}
             </h2>
             <h3
-              className="text-2xl font-bold text-center mt-8 w-[90%] sm:h-48 h-72 mx-auto"
+              className="mx-auto mt-8 h-72 w-[90%] text-center text-2xl font-bold sm:h-48"
               dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
             ></h3>
-            <div className="text-center mx-auto py-8 w-[85%]">
+            <div className="mx-auto w-[85%] py-8 text-center">
               <button
-                className="bg-green-700 rounded-md p-2 mx-8 hover:bg-green-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+                className="mx-8 rounded-md bg-green-700 p-2 hover:bg-green-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
                 onClick={() => handleAnswer(true)}
               >
                 True
               </button>
               <button
-                className="bg-red-700 rounded-md p-2 mx-8 hover:bg-red-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+                className="mx-8 rounded-md bg-red-700 p-2 hover:bg-red-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
                 onClick={() => handleAnswer(false)}
               >
                 False
@@ -127,15 +127,15 @@ export default function TrueFalseApp() {
       )}
       {loading && <LoadingPage />}
       {!loading && !currentQuestion && (
-        <div className="text-center mx-auto w-[85%] pb-8 mb-8">
+        <div className="mx-auto mb-8 w-[85%] pb-8 text-center">
           {questions.length > 0 && (
-            <p className="text-2xl font-bold bg-gradient-to-r from-green-300 via-blue-400 to-red-400 bg-clip-text text-transparent text-center mt-8 w-[90%] min-h-24 mx-auto">
+            <p className="min-h-24 mx-auto mt-8 w-[90%] bg-gradient-to-r from-green-300 via-blue-400 to-red-400 bg-clip-text text-center text-2xl font-bold text-transparent">
               No more questions! You scored {score} out of {questions.length}.
             </p>
           )}
-          <div className="text-center mx-auto py-8 w-[85%]">
+          <div className="mx-auto w-[85%] py-8 text-center">
             <button
-              className="bg-blue-500 rounded-md p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              className="m-2 rounded-md bg-blue-500 p-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
               onClick={() => startNewGame()}
             >
               New Game
@@ -151,30 +151,30 @@ export default function TrueFalseApp() {
                         {userAnswers[index].charAt(0).toUpperCase() +
                           userAnswers[index].slice(1) ===
                           question.correct_answer && (
-                          <MdOutlineDoneOutline className="text-green-500 text-3xl -mb-2" />
+                          <MdOutlineDoneOutline className="-mb-2 text-3xl text-green-500" />
                         )}
                       </span>
                       <span>
                         {userAnswers[index].charAt(0).toUpperCase() +
                           userAnswers[index].slice(1) !==
                           question.correct_answer && (
-                          <RxCross2 className="text-red-500 text-3xl -mb-2" />
+                          <RxCross2 className="-mb-2 text-3xl text-red-500" />
                         )}
                       </span>
                     </span>
                   }
                   <p
-                    className="text-lg font-bold text-center mt-8 w-[90%] mx-auto"
+                    className="mx-auto mt-8 w-[90%] text-center text-lg font-bold"
                     dangerouslySetInnerHTML={{ __html: question.question }}
                   ></p>
                 </div>
                 <span>The correct answer is: </span>
-                <span className="text-md font-bold italic text-center mt-">
+                <span className="text-md mt- text-center font-bold italic">
                   {question.correct_answer === "True" ? "True" : "False"}
                 </span>
                 <p className="text-md text-slate-500">
                   <span>Your answer was: </span>
-                  <span className="text-md font-bold italic text-center">
+                  <span className="text-md text-center font-bold italic">
                     {userAnswers[index]}
                   </span>
                 </p>
