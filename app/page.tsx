@@ -110,13 +110,13 @@ export default function TrueFalseApp() {
             ></h3>
             <div className="text-center mx-auto py-8 w-[85%]">
               <button
-                className="bg-green-700 p-2 m-2 hover:bg-green-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+                className="bg-green-700 rounded-md p-2 m-8 hover:bg-green-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
                 onClick={() => handleAnswer(true)}
               >
                 True
               </button>
               <button
-                className="bg-red-700 p-2 m-2 hover:bg-red-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+                className="bg-red-700 rounded-md p-2 m-8 hover:bg-red-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
                 onClick={() => handleAnswer(false)}
               >
                 False
@@ -135,7 +135,7 @@ export default function TrueFalseApp() {
           )}
           <div className="text-center mx-auto py-8 w-[85%]">
             <button
-              className="bg-blue-500 p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+              className="bg-blue-500 rounded-md p-2 m-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
               onClick={() => startNewGame()}
             >
               New Game
