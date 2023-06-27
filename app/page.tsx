@@ -78,6 +78,9 @@ export default function TrueFalseApp() {
             <h2 className="mx-auto mt-8 w-[90%] text-center text-2xl font-bold">
               Selected category: {categoryList[category]}
             </h2>
+            <span className="mx-auto mt-8 w-[90%] text-center text-2xl font-bold">
+              Question {currentQuestionIndex + 1} of 10:
+            </span>
             <h3
               className="mx-auto mt-8 h-72 w-[90%] text-center text-2xl font-bold sm:h-48"
               dangerouslySetInnerHTML={{ __html: currentQuestion.question }}
