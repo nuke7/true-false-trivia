@@ -74,10 +74,10 @@ export default function TrueFalseApp() {
       {currentQuestion && !loading && (
         <>
           <div className="flex flex-col items-center justify-between">
-            <h2 className="mx-auto mt-8 w-[90%] text-center text-2xl font-bold">
+            <h2 className="mx-auto mt-8 w-[90%] text-center text-xl font-bold">
               Selected category: {categoryList[category]}
             </h2>
-            <span className="mx-auto mt-8 w-[90%] text-center text-2xl font-bold">
+            <span className="mx-auto mt-8 w-[90%] text-center text-2xl font-bold underline">
               Question {currentQuestionIndex + 1} of 10:
             </span>
             <h3
