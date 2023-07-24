@@ -105,19 +105,18 @@ export default function TrueFalseApp() {
       {loading && <LoadingPage />}
       {!loading && !currentQuestion && (
         <div className="mx-auto mb-8 w-[85%] pb-8 text-center">
+          <button
+            className="m-2 rounded-md bg-blue-500 p-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
+            onClick={() => startNewGame()}
+          >
+            New Game
+          </button>
           {questions.length > 0 && (
             <p className="min-h-24 mx-auto mt-8 w-[90%] bg-gradient-to-r from-green-300 via-blue-400 to-red-400 bg-clip-text text-center text-2xl font-bold text-transparent">
               No more questions! You scored {score} out of {questions.length}.
             </p>
           )}
-          <div className="mx-auto w-[85%] py-8 text-center">
-            <button
-              className="m-2 rounded-md bg-blue-500 p-2 hover:bg-blue-200 hover:text-slate-700 active:bg-slate-900 active:text-slate-400"
-              onClick={() => startNewGame()}
-            >
-              New Game
-            </button>
-          </div>
+          <div className="mx-auto w-[85%] py-8 text-center"></div>
           {questions.map((question, index) => {
             return (
               <div key={index}>
