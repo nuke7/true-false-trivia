@@ -10,15 +10,15 @@ import { MdOutlineDoneOutline } from "react-icons/md";
 import { ApiResponse, Question, categoryList } from "./models/models";
 
 export default function TrueFalseApp() {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  /* const [questions, setQuestions] = useState<Question[]>([]); */
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
   const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(false);
+  /*  const [loading, setLoading] = useState(false); */
 
-  const { category } = useSearchContext();
+  const { category, loading, questions, fetchQuestions } = useSearchContext();
 
-  const fetchQuestions = async (numQuestions: number) => {
+  /*   const fetchQuestions = async (numQuestions: number) => {
     try {
       const uniqueQuestions: Question[] = [];
       while (uniqueQuestions.length < numQuestions) {
@@ -39,7 +39,7 @@ export default function TrueFalseApp() {
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
-  };
+  }; */
 
   const handleAnswer = (answer: boolean) => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -59,11 +59,10 @@ export default function TrueFalseApp() {
   const currentQuestion = getCurrentQuestion();
 
   const startNewGame = () => {
-    setQuestions([]);
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
     setScore(0);
-    fetchQuestions(10);
+    fetchQuestions();
   };
 
   return (

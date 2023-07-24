@@ -2,6 +2,8 @@
 
 import { useState, ReactNode } from "react";
 import { SearchContext } from "./SearchContext";
+import { ApiResponse, Question } from "@/app/models/models";
+import axios from "axios";
 
 interface IProps {
   children: ReactNode;
@@ -9,38 +11,36 @@ interface IProps {
 
 const SearchContextProvider = ({ children }: IProps) => {
   const [category, setCategory] = useState(9);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  //TODO - add a fetch here
-
-  /*   const fetchQuestions = async (numQuestions: number) => {
+  const fetchQuestions = async () => {
     try {
-      const uniqueQuestions: Question[] = [];
-      while (uniqueQuestions.length < numQuestions) {
-        setLoading(true);
-        const response = await axios.get<ApiResponse>(
-          `https://opentdb.com/api.php?amount=1&category=${category}&type=boolean`
-        );
-        const newQuestion = response.data.results[0];
-        const isDuplicate = uniqueQuestions.some(
-          (question) => question.question === newQuestion.question
-        );
-        if (!isDuplicate) {
-          uniqueQuestions.push(newQuestion);
-        }
+      setLoading(true);
+      const response = await axios.get<ApiResponse>(
+        `https://opentdb.com/api.php?amount=10&category=${category}&type=boolean`
+      );
+      if (response.data.response_code === 0) {
+        setQuestions(response.data.results);
+        setLoading(false);
+      } else {
+        console.error("Error fetching questions: Not enough questions");
+        alert("Error fetching questions : Not enough questions");
+        window.location.reload();
       }
-      setQuestions(uniqueQuestions);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
-  }; */
+  };
 
   const defineCategory = (category: number) => {
     setCategory(category);
   };
 
   return (
-    <SearchContext.Provider value={{ category, defineCategory }}>
+    <SearchContext.Provider
+      value={{ category, defineCategory, questions, loading, fetchQuestions }}
+    >
       {children}
     </SearchContext.Provider>
   );
